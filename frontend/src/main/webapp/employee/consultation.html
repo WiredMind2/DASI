@@ -194,22 +194,6 @@
                     `;
                     clientProfileContainer.appendChild(profileDetail);
                 });
-
-                // Populate inspiration ratings
-                const inspirationRatingsContainer = document.getElementById('inspiration-ratings');
-                data.inspirationRatings.forEach(rating => {
-                    const ratingRow = document.createElement('div');
-                    ratingRow.className = 'rating-row';
-                    const dots = Array.from({ length: 5 }, (_, i) => `<div class="rating-dot ${i < rating.value ? 'active' : ''}"></div>`).join('');
-                    ratingRow.innerHTML = `
-                    <div class="rating-label">${rating.label}</div>
-                    <div class="rating-dots">${dots}</div>
-                    `;
-                    inspirationRatingsContainer.appendChild(ratingRow);
-                });
-
-                // Set the inspiration result
-                document.getElementById('inspiration-result').textContent = data.inspirationResult;
             }
 
             // Example data
@@ -226,13 +210,7 @@
                     { label: "Signe chinois", value: "Dragon" },
                     { label: "Animal totem", value: "Loup" },
                     { label: "Signe zodiaque", value: "Verseau" }
-                ],
-                inspirationRatings: [
-                    { label: "Amour", value: 3 },
-                    { label: "Santé", value: 2 },
-                    { label: "Travail", value: 4 }
-                ],
-                inspirationResult: "Voici l'inspiration généré selon les paramètres indiqués par l'employé"
+                ]
             };
 
             // Generate the dashboard with example data
