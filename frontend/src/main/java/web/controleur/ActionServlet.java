@@ -17,8 +17,10 @@ import metier.service.Service;
 import web.modele.ajouterCommentaireAction;
 import web.modele.checkConnectedAction;
 import web.modele.getClientProfileAction;
+import web.modele.getConsultationHistoryAction;
 import web.modele.getMediumProfileAction;
 import web.modele.getMediumsAction;
+import web.modele.getStatisticsAction;
 import web.modele.loginAction;
 import web.modele.registerAction;
 import web.modele.requestConsultationAction;
@@ -26,11 +28,13 @@ import web.modele.terminerConsultationAction;
 import web.vue.BooleanSerialisation;
 import web.vue.CheckConnectedSerialisation;
 import web.vue.ClientProfileSerialisation;
+import web.vue.ConsultationHistorySerialisation;
 import web.vue.DisconnectSerialisation;
 import web.vue.LoginSerialisation;
 import web.vue.MediumProfileSerialisation;
 import web.vue.MediumsSerialisation;
 import web.vue.RegisterSerialisation;
+import web.vue.StatisticsSerialisation;
 
 /**
  *
@@ -65,6 +69,16 @@ public class ActionServlet extends HttpServlet {
             case "medium" : {
                 new getMediumProfileAction(service).execute(request);
                 new MediumProfileSerialisation().appliquer(request,response);
+                break;
+            }
+            case "employeHistory" : {
+                new getConsultationHistoryAction(service).execute(request);
+                new ConsultationHistorySerialisation().appliquer(request,response);
+                break;
+            }
+            case "statistics" : {
+                new getStatisticsAction(service).execute(request);
+                new StatisticsSerialisation().appliquer(request,response);
                 break;
             }
             case "requestConsultation" : {

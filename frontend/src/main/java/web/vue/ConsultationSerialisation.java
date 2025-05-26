@@ -61,7 +61,7 @@ public class ConsultationSerialisation extends Serialisation {
 
 
         JsonObject result = new JsonObject();
-        result.add("profile", profile);
+        //result.add("profile", profile);
         result.add("history", history);
 
         PrintWriter out = response.getWriter();
