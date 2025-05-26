@@ -41,14 +41,16 @@ public class getConsultationEnCoursAction extends Action {
         if(authToken != null){
             long idEmploye = Long.parseLong(authToken);
             Employe employe = service.findEmployeById(idEmploye);
-
             Consultation consultation = service.findConsultationEnCours(employe);
-            List<Consultation> histConsuls = service.getHistoriqueConsultationsClient(consultation.getClient().getId());
+            if(consultation == null){
+                return;
+            }
+            Client client = consultation.getClient();
+
+            List<Consultation> histConsuls = service.getHistoriqueConsultationsClient(client.getId());
 
             request.setAttribute("consultation", consultation);
             request.setAttribute("histConsuls", histConsuls);
-        }
-        else{
         }
     }
     

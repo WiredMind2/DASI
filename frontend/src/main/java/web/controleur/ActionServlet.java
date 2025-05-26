@@ -18,6 +18,7 @@ import web.modele.ajouterCommentaireAction;
 import web.modele.checkConnectedAction;
 import web.modele.getClientProfileAction;
 import web.modele.getConsultationHistoryAction;
+import web.modele.getConsultationEnCoursAction;
 import web.modele.getMediumProfileAction;
 import web.modele.getMediumsAction;
 import web.modele.getStatisticsAction;
@@ -29,6 +30,7 @@ import web.vue.BooleanSerialisation;
 import web.vue.CheckConnectedSerialisation;
 import web.vue.ClientProfileSerialisation;
 import web.vue.ConsultationHistorySerialisation;
+import web.vue.ConsultationSerialisation;
 import web.vue.DisconnectSerialisation;
 import web.vue.LoginSerialisation;
 import web.vue.MediumProfileSerialisation;
@@ -79,6 +81,9 @@ public class ActionServlet extends HttpServlet {
             case "statistics" : {
                 new getStatisticsAction(service).execute(request);
                 new StatisticsSerialisation().appliquer(request,response);
+            case "getConsultation" : {
+                new getConsultationEnCoursAction(service).execute(request);
+                new ConsultationSerialisation().appliquer(request, response);
                 break;
             }
             case "requestConsultation" : {
@@ -123,10 +128,6 @@ public class ActionServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
-        
-        //Service service = new Service();
-        //new TestAction(service).execute(request);
-        //new ClientsSerialisation().appliquer(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
