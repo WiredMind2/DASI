@@ -56,8 +56,8 @@ public class ConsultationSerialisation extends Serialisation {
         for (Consultation consult : histConsuls) {
             JsonObject consultData = new JsonObject();
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            consultData.addProperty("date", formatter.format(consult.getDate_fin()));
+            //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            //consultData.addProperty("date", formatter.format(consult.getDate_fin()));
 
             consultData.addProperty("comment", consult.getCommentaire_employe());
 
@@ -73,17 +73,10 @@ public class ConsultationSerialisation extends Serialisation {
         clientProfile.addProperty("Signe zodiaque", profilAstral.getSigne_zodiaque());
 
         consultationData.add("clientProfile", clientProfile);
-        
-        
-        
-
-        JsonObject result = new JsonObject();
-        //result.add("profile", profile);
-        result.add("history", history);
 
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        out.println(gson.toJson(result));
+        out.println(gson.toJson(consultationData));
         out.close();
 
     }
