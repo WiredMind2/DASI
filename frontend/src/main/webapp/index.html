@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PREDICT'IF - Découvrez votre avenir</title>
+        <link rel="stylesheet" href="index-styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <div class="logo-circle"></div>
+                <h1>PREDICT'IF</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Accueil</a></li>
+                </ul>
+                <div class="auth-buttons" id="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Se Connecter</a>
+                    <a href="inscription.html" class="btn btn-primary">S'inscrire</a>
+                </div>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <span class="greeting" id="user-greeting">Bonjour, Alice</span>
+                    <div class="avatar" id="user-avatar">A</div>
+
+                    <a class="logout" href="/frontend/ActionServlet/disconnect">Déconnexion</a>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", async function () {
+                        let username = null;
+                        const url = "/frontend/ActionServlet/checkConnected";
+                        try {
+                            const response = await fetch(url);
+                            if (!response.ok) {
+                                throw new Error(`Response status: ${response.status}`);
+                            }
+
+                            username = await response.text();
+                        } catch (error) {
+                            console.error(error.message);
+                        }
+
+                        const authButtons = document.getElementById("auth-buttons");
+                        const userMenu = document.getElementById("user-menu");
+                        if (username != null) {
+                            console.log(username);
+                            userMenu.style.display = "flex";
+                            authButtons.style.display = "none";
+                            document.getElementById("user-greeting").innerHTML = "Bonjour, " + username;
+                            document.getElementById("user-avatar").innerHTML = username[0];
+                        } else {
+                            authButtons.style.display = "flex";
+                            userMenu.style.display = "none";
+                        }
+                    });
+                </script>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Découvrez votre avenir</h2>
+                    <p>
+                        PREDICT'IF vous offre les meilleurs services de voyance par téléphone.
+                        Nos médiums expérimentés vous guideront à travers les mystères de
+                        votre passé, présent et futur.
+                    </p>
+                    <a href="#mediums" class="btn btn-primary">Découvrir nos médiums</a>
+                </div>
+                <div class="hero-image">
+                    <img src="zodiac.svg" alt="Zodiac Sign" class="zodiac-image">
+                </div>
+            </section>
+
+            <section class="mediums" id="mediums">
+                <h2>Nos Médiums</h2>
+                <p class="section-description">
+                    Nous sélectionnons les trois catégories afin de vous trouver les médiums les plus
+                    expérimentés dans leur domaine
+                </p>
+
+                <div class="medium-cards">
+                    <a href="#spirits" class="medium-card">
+                        <div class="medium-icon">
+                            <span class="crystal-ball">🔮</span>
+                        </div>
+                        <h3>Nos Spirites</h3>
+                        <p>
+                            Communiquez avec vos proches disparus et
+                            recevez des messages de l'au-delà grâce à nos
+                            médiums spirites expérimentés.
+                        </p>
+                    </a>
+
+
+                    <a href="#cartomancers" class="medium-card">
+                        <div class="medium-icon">
+                            <span class="tarot-card">🃏</span>
+                        </div>
+                        <h3>Nos Cartomanciens</h3>
+                        <p>
+                            Découvrez ce que l'avenir vous réserve grâce à
+                            la lecture des cartes par nos cartomanciens aux
+                            dons exceptionnels.
+                        </p>
+                    </a>
+
+
+                    <a href="#astrologers" class="medium-card">
+                        <div class="medium-icon">
+                            <span class="star">⭐</span>
+                        </div>
+                        <h3>Nos Astrologues</h3>
+                        <p>
+                            Comprenez l'influence des astres sur votre vie et
+                            votre destin grâce à nos astrologues passionnés
+                            et qualifiés.
+                        </p>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <section class="professionals" id="professionals-section"></section>
+        <!-- Content will be dynamically generated by JavaScript -->
+    </section>
+
+    <script>
+        async function fetchData() {
+            const url = "/frontend/ActionServlet/getMediums";
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log(json);
+                return json;
+            } catch (error) {
+                console.error(error.message);
+            }
+            return [
+                {
+                    category: "Nos Spirites",
+                    id: "spirits",
+                    professionals: [
+                        {name: "Mme Claire", description: "Médium spirite capable de communiquer avec les défunts", link: "medium.html"},
+                        {name: "Marc Visions", description: "Spirite possédant une plus de 20 ans de pratique", link: "medium.html"},
+                        {name: "Sylvie Lumière", description: "Médium aux dons exceptionnels pour contacter les êtres chers", link: "medium.html"},
+                        {name: "Pascal Éthéré", description: "Spécialiste de la communication avec le monde spirituel", link: "medium.html"}
+                    ]
+                },
+                {
+                    category: "Nos Cartomanciens",
+                    id: "cartomancers",
+                    professionals: [
+                        {name: "Madame Irma", description: "Spécialiste du tarot et l'oracle avec 15 ans d'expérience", link: "medium.html"},
+                        {name: "Serge Kelian", description: "Expert en cartomancie et en Médium par les cartes", link: "medium.html"},
+                        {name: "Mlle Rose", description: "Spécialiste des cartes oracle et du tarot des anges", link: "medium.html"},
+                        {name: "Léon Dubois", description: "Médium cartomancier renommé pour ses prédictions précises", link: "medium.html"}
+                    ]
+                },
+                {
+                    category: "Nos Astrologues",
+                    id: "astrologers",
+                    professionals: [
+                        {name: "Pierre Céleste", description: "Astrologue professionnel spécialisé dans les thèmes védique", link: "medium.html"},
+                        {name: "Étoile Brillante", description: "Experte en astrologie sidérale et en étude des étoiles distantes", link: "medium.html"},
+                        {name: "Luc Solaire", description: "Spécialiste des transits planétaires et de leurs effets", link: "medium.html"},
+                        {name: "Luna Nocturne", description: "Astrologue intuitive spécialisée dans les énergies cosmiques", link: "medium.html"}
+                    ]
+                }
+            ];
+        }
+        document.addEventListener("DOMContentLoaded", async function () {
+            const professionalsData = await fetchData();
+            const professionalsSection = document.getElementById("professionals-section");
+            professionalsData.forEach(category => {
+                const categoryHTML = `
+                    <div class="professionals-category" id="${category.id}">
+                        <h2>${category.category}</h2>
+                        <div class="professionals-grid">
+                            ${category.professionals.map(professional => `
+                                <div class="professional-card">
+                                    <div class="professional-image"></div>
+                                    <h3>${professional.name}</h3>
+                                    <p>${professional.description}</p>
+                                    <a href="${professional.link}" class="btn btn-small">En savoir plus</a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                professionalsSection.innerHTML += categoryHTML;
+            });
+        });
+
+    </script>
+</main>
+
+<footer>
+    <p>&copy; 2025 PREDICT'IF - Tous droits réservés</p>
+</footer>
+</body>
+</html>

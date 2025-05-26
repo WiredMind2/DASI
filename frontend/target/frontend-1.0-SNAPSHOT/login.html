@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | PREDICT'IF</title>
+    <link rel="stylesheet" href="login-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-circle"></div>
+            <h1>PREDICT'IF</h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Accueil</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Se Connecter</a>
+                <a href="inscription.html" class="btn btn-primary">S'inscrire</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <div class="zodiac-section">
+                <img src="zodiac.svg" alt="Zodiac Sign" class="zodiac-image">
+                <div class="zodiac-text">
+                    <h2>Découvrez<br>votre<br>avenir</h2>
+                </div>
+            </div>
+
+            <div class="login-form-container">
+                <div class="login-form">
+                    <h2>Connexion</h2>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Votre adresse email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="Votre mot de passe" required>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="loginButton">Se connecter</button>
+
+                    <p class="signup-link">
+                        Pas encore membre ? <a href="inscription.html">S'inscrire</a>
+                    </p>
+                    <p id="errorMessage" class="error-message" style="display: none;">Identifiants incorrects. Veuillez réessayer.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            try {
+                const response = await fetch('/frontend/ActionServlet/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                
+                const json = await response.json();
+
+                console.log(json);
+
+                if (response.ok && json.error === undefined) {
+                    if(json.accType == "client"){
+                        window.location.href = 'dashboard.html';
+                    } else if (json.accType == "employe"){
+                        window.location.href = 'employee'
+                    }
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2025 PREDICT'IF - Tous droits réservés</p>
+    </footer>
+</body>
+
+</html>

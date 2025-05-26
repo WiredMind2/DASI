@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard Employé | PREDICT'IF</title>
+        <link rel="stylesheet" href="employee-styles.css">
+    </head>
+    <body>
+        <header class="header">
+            <div class="greeting" id="greeting">Bonjour</div>
+            <script>
+                document.addEventListener("DOMContentLoaded", async function () {
+                    let username = null;
+                    const url = "/frontend/ActionServlet/checkConnected";
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        username = await response.text();
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+
+                    if (username != null) {
+                        document.getElementById('greeting').textContent = 'Bonjour ' + username;
+                    } else {
+
+                        document.getElementById('greeting').textContent = 'Bonjour';
+                    }
+                });
+            </script>
+            
+            <div class="nav-buttons">
+                <button class="nav-button">Accueil</button>
+                <button class="nav-button" onclick="handleLogout()">Déconnexion</button>
+                <script>
+                    function handleLogout() {
+                        window.location.href = '/frontend/ActionServlet/disconnect';
+                    }
+                </script>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="dashboard-grid">
+                <a href="consultation.html" class="nav-tile">
+                    <div class="nav-tile-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNsaXBib2FyZC1saXN0Ij48cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI0IiB4PSI4IiB5PSIyIiByeD0iMSIgcnk9IjEiLz48cGF0aCBkPSJNMTYgNHYxNmExIDEgMCAwIDEtMSAxSDVhMSAxIDAgMCAxLTEtMVY0Ii8+PHBhdGggZD0iTTggMTBoOCIvPjxwYXRoIGQ9Ik04IDE0aDgiLz48cGF0aCBkPSJNOCAxOGg4Ii8+PC9zdmc+" alt="Clipboard icon">
+                    </div>
+                    <div class="nav-tile-text">
+                        Tableau de bord de la consultation en cours
+                    </div>
+                </a>
+
+                <a href="statistics.html" class="nav-tile">
+                    <div class="nav-tile-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWJhci1jaGFydC0zIj48cGF0aCBkPSJNMyAzdjE4aDE4Ii8+PHBhdGggZD0iTTE4IDEwdjhhMSAxIDAgMCAxLTEgMWgtMiIvPjxwYXRoIGQ9Ik0xMiA2djEyYTEgMSAwIDAgMS0xIDFIOSIvPjxwYXRoIGQ9Ik02IDEwdjhhMSAxIDAgMCAxLTEgMUgzIi8+PC9zdmc+" alt="Statistics icon">
+                    </div>
+                    <div class="nav-tile-text">
+                        Voir les statistiques de l'agence
+                    </div>
+                </a>
+
+                <a href="history.html" class="nav-tile">
+                    <div class="nav-tile-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWJvb2stb3BlbiI+PHBhdGggZD0iTTIgMyBoNmE0IDQgMCAwIDEgNCA0IHYxNGEzIDMgMCAwIDAtMyAzIGgtN3oiLz48cGF0aCBkPSJNMjIgMyBoLTZhNCA0IDAgMCAwLTQgNCB2MTRhMyAzIDAgMCAxIDMgMyBoN3oiLz48L3N2Zz4=" alt="Book icon">
+                    </div>
+                    <div class="nav-tile-text">
+                        Voir l'historique de consultation
+                    </div>
+                </a>
+
+                <a href="map.html" class="nav-tile">
+                    <div class="nav-tile-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWdsb2JlIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPjxwYXRoIGQ9Ik0yIDEyaDIwIi8+PHBhdGggZD0iTTEyIDJhMTUuMyAxNS4zIDAgMCAxIDQgMTAgMTUuMyAxNS4zIDAgMCAxLTQgMTAgMTUuMyAxNS4zIDAgMCAxLTQtMTAgMTUuMyAxNS4zIDAgMCAxIDQtMTB6Ii8+PC9zdmc+" alt="Globe icon">
+                    </div>
+                    <div class="nav-tile-text">
+                        Voir la carte des clients
+                    </div>
+                </a>
+            </div>
+        </main>
+    </body>
+</html>

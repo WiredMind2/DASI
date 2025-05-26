@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | PREDICT'IF</title>
+    <link rel="stylesheet" href="inscription-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-circle"></div>
+            <h1>PREDICT'IF</h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Accueil</a></li>
+            </ul>
+            <div class="auth-buttons" id="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Se Connecter</a>
+                <a href="inscription.html" class="btn btn-primary">S'inscrire</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="background-circles">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <div class="registration-container">
+            <div class="registration-form">
+                <h2>Inscription</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" placeholder="Votre nom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse postale</label>
+                        <input type="text" id="adresse" placeholder="Votre adresse" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" placeholder="Votre prénom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" placeholder="Votre numéro de téléphone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date de naissance</label>
+                        <input type="text" id="date" placeholder="18/04/2025" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="Créez un mot de passe" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Votre adresse email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmer mot de passe</label>
+                        <input type="password" id="confirm-password" placeholder="Confirmez votre mot de passe"
+                            required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register">S'inscrire</button>
+
+                <div id="error-message" class="error-message" style="display: none;"></div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel">Annuler</button>
+                    <a href="login.html" class="btn-login">Se connecter</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('.btn-register').addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            const nom = document.getElementById('nom').value.trim();
+            const prenom = document.getElementById('prenom').value.trim();
+            const adresse = document.getElementById('adresse').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const date = document.getElementById('date').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm-password').value.trim();
+            const errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.style.display = 'none';
+
+            if (password !== confirmPassword) {
+                errorMessageDiv.textContent = "Les mots de passe ne correspondent pas.";
+                errorMessageDiv.style.display = 'block';
+                return;
+            }
+
+            const userData = {
+                nom,
+                prenom,
+                adresse,
+                telephone,
+                dateNaissance: date,
+                email,
+                password
+            };
+
+            try {
+                const response = await fetch('/frontend/ActionServlet/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                
+                const json = await response.json();
+
+                console.log(json);
+
+                if (response.ok && json.error == "ok") {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorMessageDiv.textContent = `Erreur: ${json.error || 'Une erreur est survenue.'}`;
+                    errorMessage.style.display = 'block';
+                }
+
+            } catch (error) {
+                errorMessageDiv.textContent = "Erreur réseau. Veuillez réessayer plus tard.";
+                errorMessageDiv.style.display = 'block';
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2025 PREDICT'IF - Tous droits réservés</p>
+    </footer>
+</body>
+
+</html>

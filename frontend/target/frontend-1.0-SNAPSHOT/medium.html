@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mme Morgane - Spirite | PREDICT'IF</title>
+        <link rel="stylesheet" href="index-styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+              rel="stylesheet">
+
+
+    </head>
+
+    <body>
+        <header>
+            <div class="logo">
+                <div class="logo-circle"></div>
+                <h1>PREDICT'IF</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                </ul>
+                <div class="auth-buttons" id="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Se Connecter</a>
+                    <a href="inscription.html" class="btn btn-primary">S'inscrire</a>
+                </div>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <span class="greeting" id="user-greeting">Bonjour, Alice</span>
+                    <div class="avatar" id="user-avatar">A</div>
+
+                    <a class="logout" href="/frontend/ActionServlet/disconnect">Déconnexion</a>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", async function () {
+                        let username = null;
+                        const url = "/frontend/ActionServlet/checkConnected";
+                        try {
+                            const response = await fetch(url);
+                            if (!response.ok) {
+                                throw new Error(`Response status: ${response.status}`);
+                            }
+
+                            username = await response.text();
+                        } catch (error) {
+                            console.error(error.message);
+                        }
+
+                        const authButtons = document.getElementById("auth-buttons");
+                        const userMenu = document.getElementById("user-menu");
+                        if (username != null) {
+                            console.log(username);
+                            userMenu.style.display = "flex";
+                            authButtons.style.display = "none";
+                            document.getElementById("user-greeting").innerHTML = "Bonjour, " + username;
+                            document.getElementById("user-avatar").innerHTML = username[0];
+                        } else {
+                            authButtons.style.display = "flex";
+                            userMenu.style.display = "none";
+                        }
+                    });
+                </script>
+            </nav>
+        </header>
+
+        <main>
+        </main>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", async function () {
+                async function getProfileData() {
+                    const id = (window.location).toString().split('=').at(-1);
+                    const url = "/frontend/ActionServlet/medium?id=" + id;
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        const json = await response.json();
+                        console.log(json);
+                        return json;
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+                    return {
+                        breadcrumb: breadcrumbs,
+                        profile: {
+                            name: "Mme Morgane",
+                            type: "Spirite",
+                            image: "crystal-ball.webp",
+                            rating: 3,
+                            presentation: "Communiquer avec vos proches disparus et recevoir leurs messages grâce à mes dons exceptionnels. Je vous guide dans votre parcours spirituel avec bienveillance et précision.",
+                            specialties: [
+                                "Communication avec l'au-delà",
+                                "Guidance spirituelle",
+                                "Médiumnité par écrit",
+                                "Interprétation des signes"
+                            ]
+                        },
+                        testimonials: [
+                            {
+                                name: "Marie L.",
+                                date: "13/04/2025",
+                                text: "Une expérience incroyable ! Mme Morgane a pu me mettre en contact avec ma grand-mère et a transmis des messages qui était, elle pouvait connaître. Je recommande vivement."
+                            },
+                            {
+                                name: "Thomas P.",
+                                date: "10/04/2025",
+                                text: "Mme Morgane a un don extraordinaire. Elle m'a guidé dans un moment difficile avec ses conseils précis et justes. Sa sensibilité et son empathie sont remarquables."
+                            },
+                            {
+                                name: "Sophie H.",
+                                date: "05/04/2025",
+                                text: "Consultation très enrichissante sur mes aspects des réponses concrètes. J'ai apprécié la clarté des messages reçus et la bienveillance de Mme Morgane."
+                            }
+                        ]
+                    };
+                }
+                const data = await getProfileData();
+                data.breadcrumb = [
+                    {text: "Accueil", link: "index.html"},
+                    {text: "Spirites", link: "index.html#spirits"},
+                    {text: "Mme Morgane"}
+                ];
+                // Generate breadcrumb
+                const breadcrumbHTML = data.breadcrumb
+                        .map((item, index) => {
+                            if (item.link) {
+                                return `<a href="${item.link}">${item.text}</a>`;
+                            } else {
+                                return `<span>${item.text}</span>`;
+                            }
+                        })
+                        .join(" > ");
+                const breadcrumbContainer = `<div class="breadcrumb">${breadcrumbHTML}</div>`;
+                function checkUserLoggedIn() {
+                    return document.cookie
+                            .split('; ')
+                            .some(cookie => cookie.startsWith("authToken"));
+                }
+
+                // Generate profile
+                const profileHTML = `
+                                <div class="profile-container">
+                                        <h2 class="profile-name">${data.profile.name}</h2>
+                                        <p class="profile-type">${data.profile.type}</p>
+                                        <div class="profile-content">
+                                                <div class="profile-image">
+                                                        <img src="${data.profile.image}" alt="Image representing ${data.profile.name}">
+                                                </div>
+                                                <div class="profile-details">
+                                                        <div class="rating">
+                                                                ${[...Array(5)].map((_, i) => `<span style="color: ${i < data.profile.rating ? 'yellow' : 'gray'};">★</span>`).join("")}
+                                                        </div>
+                                                        <div class="section">
+                                                                <h3>Présentation</h3>
+                                                                <p>${data.profile.presentation}</p>
+                                                        </div>
+                                                        <div class="section">
+                                                                <h3>Spécialités</h3>
+                                                                <ul class="specialties">
+                                                                        ${data.profile.specialties.map(specialty => `<li>${specialty}</li>`).join("")}
+                                                                </ul>
+                                                        </div>
+                                                        ${checkUserLoggedIn() ? '<a href="#" class="btn-consultation">Demander une consultation</a>' : '<a href="login.html" class="login-message">Veuillez vous connecter pour demander une consultation.</a>'}
+                                                </div>
+                                        </div>
+                                </div>
+                        `;
+                // Generate testimonials
+                const testimonialsHTML = `
+                                <section class="testimonials">
+                                        <h2>Témoignages récents</h2>
+                                        <div class="testimonials-grid">
+                                                ${data.testimonials
+                        .map(
+                                testimonial => `
+                                                        <div class="testimonial-card">
+                                                                <div class="testimonial-header">
+                                                                        <span class="testimonial-name">${testimonial.name}</span>
+                                                                        <span class="testimonial-date">${testimonial.date}</span>
+                                                                </div>
+                                                                <p class="testimonial-text">${testimonial.text}</p>
+                                                        </div>
+                                                `
+                        )
+                        .join("")}
+                                        </div>
+                                </section>
+                        `;
+                // Append breadcrumb before the main container
+                const mainElement = document.querySelector("main");
+                mainElement.insertAdjacentHTML("beforebegin", breadcrumbContainer);
+                // Append profile and testimonials to the main container
+                mainElement.innerHTML = `
+                                ${profileHTML}
+                                ${testimonialsHTML}
+                        `;
+            });
+        </script>
+
+        <footer>
+            <p>&copy; 2025 PREDICT'IF - Cabinet de voyance par téléphone</p>
+        </footer>
+    </body>
+
+</html>

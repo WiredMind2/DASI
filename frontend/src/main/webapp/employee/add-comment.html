@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ajouter un Commentaire | PREDICT'IF</title>
+        <link rel="stylesheet" href="employee-styles.css">
+    </head>
+    <body>
+        <header class="header">
+
+            <div class="greeting" id="greeting">Bonjour</div>
+            <script>
+                document.addEventListener("DOMContentLoaded", async function () {
+                    let username = null;
+                    const url = "/frontend/ActionServlet/checkConnected";
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        username = await response.text();
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+
+                    if (username != null) {
+                        document.getElementById('greeting').textContent = 'Bonjour ' + username;
+                    } else {
+
+                        document.getElementById('greeting').textContent = 'Bonjour';
+                    }
+                });
+            </script>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="window.location.href = 'index.html'">Accueil</button>
+                <button class="nav-button" onclick="handleLogout()">Déconnexion</button>
+                <script>
+                    function handleLogout() {
+                        window.location.href = '/frontend/ActionServlet/disconnect';
+                    }
+                </script>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <h1 class="card-title">Ajouter un commentaire sur la consultation</h1>
+
+            <div class="comment-form">
+                <div class="comment-instructions">
+                    L'employé écrit ici le commentaire de ce qui s'est passé durant la consultation et qui pourrait être utile pour ses collègues lors de futurs consultations avec ce client
+                </div>
+
+                <textarea rows="6" style="width: 100%; padding: 1rem; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 1rem;"></textarea>
+
+                <button class="action-button" onclick="addComment()">Ajouter le commentaire</button>
+                <script>
+                    function addComment() {
+                        const comment = document.querySelector('textarea').value.trim();
+                        if (!comment) {
+                            alert("Veuillez saisir un commentaire.");
+                            return;
+                        }
+                        fetch('/frontend/ActionServlet/ajouterCommentaire', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({comment})
+                        })
+                                .then(response => {
+                                    if (response.ok) {
+                                        window.location.href = 'index.html';
+                                    } else {
+                                        alert("Erreur lors de l'envoi du commentaire.");
+                                    }
+                                })
+                                .catch(() => {
+                                    alert("Erreur réseau.");
+                                });
+                    }
+                </script>
+            </div>
+        </main>
+    </body>
+</html>

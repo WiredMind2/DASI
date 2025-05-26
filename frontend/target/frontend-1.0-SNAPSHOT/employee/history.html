@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Historique de Consultation | PREDICT'IF</title>
+        <link rel="stylesheet" href="employee-styles.css">
+    </head>
+
+    <body>
+        <header class="header">
+
+            <div class="greeting" id="greeting">Bonjour</div>
+            <script>
+                document.addEventListener("DOMContentLoaded", async function () {
+                    let username = null;
+                    const url = "/frontend/ActionServlet/checkConnected";
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        username = await response.text();
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+
+                    if (username != null) {
+                        document.getElementById('greeting').textContent = 'Bonjour ' + username;
+                    } else {
+
+                        document.getElementById('greeting').textContent = 'Bonjour';
+                    }
+                });
+            </script>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="window.location.href = 'index.html'">Accueil</button>
+                <button class="nav-button" onclick="handleLogout()">Déconnexion</button>
+                <script>
+                    function handleLogout() {
+                        window.location.href = '/frontend/ActionServlet/disconnect';
+                    }
+                </script>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <h2 class="card-title">Historique de consultation</h2>
+                <div class="history-list" id="history-list">
+                    <!-- Les éléments de l'historique seront générés ici par JavaScript -->
+                </div>
+                <script>
+                    // Exemple de fonction pour obtenir les données de l'historique
+                    function fetchConsultationHistory() {
+                        // Cette fonction devrait faire un appel API réel
+                        // Exemple de données fictives :
+                        return Promise.resolve([
+                            {
+                                date: "12/06/2024",
+                                client: "Alice Dupont",
+                                medium: "Madame Irma",
+                                feedback: "Très satisfait",
+                                comment: "Consultation très précise et bienveillante."
+                            },
+                            {
+                                date: "10/06/2024",
+                                client: "Bob Martin",
+                                medium: "Maître Zen",
+                                feedback: "Satisfait",
+                                comment: "Bon échange, réponses claires."
+                            },
+                            {
+                                date: "08/06/2024",
+                                client: "Claire Dubois",
+                                medium: "Oracle Luna",
+                                feedback: "Peu satisfait",
+                                comment: "Manque de détails dans la consultation."
+                            }
+                        ]);
+                    }
+
+                    function renderHistory() {
+                        const container = document.getElementById('history-list');
+                        fetchConsultationHistory().then(history => {
+                            container.innerHTML = '';
+                            history.forEach(item => {
+                                const div = document.createElement('div');
+                                div.className = 'history-item';
+                                div.innerHTML = `
+                                    <div class="history-date">${item.date}</div>
+                                    <div class="history-client">"${item.client}" et "${item.medium}"</div>
+                                    <div class="history-feedback">${item.feedback}</div>
+                                    <div class="history-comment">${item.comment}</div>
+                                `;
+                                container.appendChild(div);
+                            });
+                        });
+                    }
+
+                    renderHistory();
+                </script>
+            </div>
+        </main>
+    </body>
+
+</html>

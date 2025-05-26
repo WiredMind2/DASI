@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard | PREDICT'IF</title>
+        <link rel="stylesheet" href="dashboard-styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+              rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+            <div class="logo">
+                <div class="logo-circle"></div>
+                <h1>PREDICT'IF</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Accueil</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-menu" id="user-menu" style="display: none;">
+                <span class="greeting" id="user-greeting">Bonjour, Alice</span>
+                <div class="avatar" id="user-avatar">A</div>
+                <a class="logout" href="/frontend/ActionServlet/disconnect">Déconnexion</a>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", async function () {
+                    let username = null;
+                    const url = "/frontend/ActionServlet/checkConnected";
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        username = await response.text();
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+
+                    const userMenu = document.getElementById("user-menu");
+                    if (username != null) {
+                        console.log(username);
+                        userMenu.style.display = "flex";
+
+                        document.getElementById("user-greeting").innerHTML = "Bonjour, " + username;
+                        document.getElementById("user-avatar").innerHTML = username[0];
+                    } else {
+                        userMenu.style.display = "none";
+                    }
+                });
+            </script>
+        </header>
+
+        <main>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="profile">Profil Astral</button>
+                <button class="tab-btn" data-tab="history">Historique des consultations</button>
+            </div>
+            <div class="tab-content" id="tab-content"></div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 PREDICT'IF - Tous droits réservés</p>
+        </footer>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', async function () {
+                // Example function to fetch data
+                async function fetchData() {
+                    const url = "/frontend/ActionServlet/getClient  ";
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+
+                        const json = await response.json();
+                        console.log(json);
+                        return json;
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+
+                    return {
+                        profile: {
+                            name: "Alice",
+                            zodiacSign: "Sagittaire ♐",
+                            chineseSign: "Cochon 🐖",
+                            luckyColor: "Crème 🟡",
+                            totemAnimal: "Sphinx 🦊",
+                            quote: "Les étoiles vous guident, mais c'est à vous de choisir votre chemin."
+                        },
+                        history: [
+                            {date: "15/04/2025", medium: "Madame Irma", type: "Cartomancienne", duration: "45 min", comment: "Consultation sur les relations amoureuses"},
+                            {date: "02/03/2025", medium: "Professeur Yang", type: "Astrologue", duration: "30 min", comment: "Orientation professionnelle"},
+                            {date: "17/01/2025", medium: "Serena", type: "Spirite", duration: "60 min", comment: "Contact avec un proche disparu"}
+                        ]
+                    };
+                }
+
+                const data = await fetchData();
+
+                // Generate Astral Profile Tab
+                const profileTab = `
+                <div class="tab-pane active" id="profile">
+                <h2>Votre profil astral</h2>
+                <div class="profile-content">
+                    <div class="astral-chart">
+                    <div class="orbit">
+                        <div class="symbol symbol-sagittarius">${data.profile.zodiacSign.split(' ')[1]}</div>
+                        <div class="symbol symbol-star">${data.profile.luckyColor.split(' ')[1]}</div>
+                        <div class="symbol symbol-pig">${data.profile.chineseSign.split(' ')[1]}</div>
+                        <div class="symbol symbol-fox">${data.profile.totemAnimal.split(' ')[1]}</div>
+                        <div class="user-name">${data.profile.name}</div>
+                    </div>
+                    </div>
+                    <div class="astral-details">
+                    <div class="detail-row">
+                        <div class="detail-label">Signe du zodiaque:</div>
+                        <div class="detail-value">${data.profile.zodiacSign}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Signe chinois:</div>
+                        <div class="detail-value">${data.profile.chineseSign}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Couleur porte-bonheur:</div>
+                        <div class="detail-value">${data.profile.luckyColor}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Animal totem:</div>
+                        <div class="detail-value">${data.profile.totemAnimal}</div>
+                    </div>
+                    <div class="astral-quote">
+                        "${data.profile.quote}"
+                    </div>
+                    </div>
+                </div>
+                </div>
+            `;
+
+                // Generate Consultation History Tab
+                const historyRows = data.history.map(entry => `
+                <tr>
+                <td>${entry.date}</td>
+                <td>${entry.medium}</td>
+                <td>${entry.type}</td>
+                <td>${entry.duration}</td>
+                <td>${entry.comment}</td>
+                </tr>
+            `).join('');
+
+                const historyTab = `
+                <div class="tab-pane" id="history">
+                <h2>Historique de vos consultations</h2>
+                <div class="consultation-table">
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Date</th>
+                        <th>Médium</th>
+                        <th>Type</th>
+                        <th>Durée</th>
+                        <th>Commentaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${historyRows}
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            `;
+
+                // Append generated content to the tab-content div
+                document.getElementById('tab-content').innerHTML = profileTab + historyTab;
+
+                // Get all tab buttons and tab panes
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+
+                // Add click event listener to each tab button
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Get the tab to activate
+                        const tabToActivate = this.dataset.tab;
+
+                        // Remove active class from all buttons and panes
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                        // Add active class to clicked button
+                        this.classList.add('active');
+
+                        // Add active class to corresponding pane
+                        document.getElementById(tabToActivate).classList.add('active');
+                    });
+                });
+            });
+
+        </script>
+    </body>
+
+</html>
