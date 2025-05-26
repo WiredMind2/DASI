@@ -43,10 +43,10 @@ public class requestConsultationAction extends Action {
         
             boolean res = service.demandeConsultation(client, medium);
         
-            request.setAttribute("resultConsultation", res);
+            request.setAttribute("result", res);
         }
         else{
-            request.setAttribute("resultConsultation", false);
+            request.setAttribute("result", false);
         }
     }
     
