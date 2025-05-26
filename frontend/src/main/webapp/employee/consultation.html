@@ -164,7 +164,42 @@
         </div>
 
         <script>
-            function generateConsultationDashboard(data) {
+            async function getProfileData() {
+                const id = (window.location).toString().split('=').at(-1);
+                const url = "/frontend/ActionServlet/getConsultation";
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`);
+                    }
+
+                    const json = await response.json();
+                    console.log(json);
+                    return json;
+                } catch (error) {
+                    console.error(error.message);
+                }
+                // Example data
+                return {
+                    medium: "DénominationMedium",
+                    client: { firstName: "Prenom", lastName: "Nom" },
+                    previousConsultations: [
+                        { date: "01/01/2023", comment: "Commentaire d'une ancienne consultation 1" },
+                        { date: "02/02/2023", comment: "Commentaire d'une ancienne consultation 2" },
+                        { date: "03/03/2023", comment: "Commentaire d'une ancienne consultation 3" }
+                    ],
+                    clientProfile: [
+                        { label: "Couleur", value: "Bleu" },
+                        { label: "Signe chinois", value: "Dragon" },
+                        { label: "Animal totem", value: "Loup" },
+                        { label: "Signe zodiaque", value: "Verseau" }
+                    ]
+                };
+            }
+
+            async function generateConsultationDashboard() {
+                const data = await getProfileData();
+
                 // Set the dashboard title
                 document.getElementById('dashboard-title').textContent = `Tableau de bord de consultation: "${data.medium}" pour "${data.client.firstName} ${data.client.lastName}"`;
 
@@ -196,25 +231,8 @@
                 });
             }
 
-            // Example data
-            const exampleData = {
-                medium: "DénominationMedium",
-                client: { firstName: "Prenom", lastName: "Nom" },
-                previousConsultations: [
-                    { date: "01/01/2023", comment: "Commentaire d'une ancienne consultation 1" },
-                    { date: "02/02/2023", comment: "Commentaire d'une ancienne consultation 2" },
-                    { date: "03/03/2023", comment: "Commentaire d'une ancienne consultation 3" }
-                ],
-                clientProfile: [
-                    { label: "Couleur", value: "Bleu" },
-                    { label: "Signe chinois", value: "Dragon" },
-                    { label: "Animal totem", value: "Loup" },
-                    { label: "Signe zodiaque", value: "Verseau" }
-                ]
-            };
-
             // Generate the dashboard with example data
-            generateConsultationDashboard(exampleData);
+            generateConsultationDashboard();
         </script>
     </main>
 </body>
