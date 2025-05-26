@@ -1,160 +1,244 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tableau de Bord Consultation | PREDICT'IF</title>
-        <link rel="stylesheet" href="employee-styles.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Consultation | PREDICT'IF</title>
+    <link rel="stylesheet" href="employee-styles.css">
+</head>
 
-    <body>
-        <header class="header">
+<body>
+    <header class="header">
 
-            <div class="greeting" id="greeting">Bonjour</div>
+        <div class="greeting" id="greeting">Bonjour</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", async function () {
+                let username = null;
+                const url = "/frontend/ActionServlet/checkConnected";
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`);
+                    }
+
+                    username = await response.text();
+                } catch (error) {
+                    console.error(error.message);
+                }
+
+                if (username != null) {
+                    document.getElementById('greeting').textContent = 'Bonjour ' + username;
+                } else {
+
+                    document.getElementById('greeting').textContent = 'Bonjour';
+                }
+            });
+        </script>
+
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href = 'index.html'">Accueil</button>
+            <button class="nav-button" onclick="handleLogout()">Déconnexion</button>
             <script>
-                document.addEventListener("DOMContentLoaded", async function () {
-                    let username = null;
-                    const url = "/frontend/ActionServlet/checkConnected";
-                    try {
-                        const response = await fetch(url);
-                        if (!response.ok) {
-                            throw new Error(`Response status: ${response.status}`);
-                        }
-
-                        username = await response.text();
-                    } catch (error) {
-                        console.error(error.message);
-                    }
-
-                    if (username != null) {
-                        document.getElementById('greeting').textContent = 'Bonjour ' + username;
-                    } else {
-
-                        document.getElementById('greeting').textContent = 'Bonjour';
-                    }
-                });
+                function handleLogout() {
+                    window.location.href = '/frontend/ActionServlet/disconnect';
+                }
             </script>
+        </div>
+    </header>
 
-            <div class="nav-buttons">
-                <button class="nav-button" onclick="window.location.href = 'index.html'">Accueil</button>
-                <button class="nav-button" onclick="handleLogout()">Déconnexion</button>
+    <main class="main-content">
+        <h1 id="dashboard-title" class="card-title"></h1>
+
+        <div class="consultation-dashboard">
+            <div class="card">
+                <h2 class="card-title">Anciennes consultations</h2>
+                <div id="previous-consultations" class="previous-consultations"></div>
+                <button class="action-button" onclick="finishConsultation()">Finir la consultation</button>
                 <script>
-                    function handleLogout() {
-                        window.location.href = '/frontend/ActionServlet/disconnect';
+                    function finishConsultation() {
+                        fetch('/frontend/ActionServlet/terminerConsultation', { method: 'POST' })
+                            .then(response => {
+                                if (response.ok) {
+                                    window.location.href = 'add-comment.html';
+                                }
+                            });
                     }
                 </script>
             </div>
-        </header>
 
-        <main class="main-content">
-            <h1 id="dashboard-title" class="card-title"></h1>
+            <div class="card">
+                <h2 id="client-profile-title" class="card-title"></h2>
+                <div id="client-profile" class="client-profile"></div>
 
-            <div class="consultation-dashboard">
-                <div class="card">
-                    <h2 class="card-title">Anciennes consultations</h2>
-                    <div id="previous-consultations" class="previous-consultations"></div>
-                    <button class="action-button" onclick="finishConsultation()">Finir la consultation</button>
-                    <script>
-                        function finishConsultation() {
-                            fetch('/frontend/ActionServlet/terminerConsultation', {method: 'POST'})
-                                    .then(response => {
-                                        if (response.ok) {
-                                            window.location.href = 'add-comment.html';
-                                        }
-                                    });
+                <div class="inspiration-section">
+                    <h3 class="inspiration-title">Besoin d'inspirations ?</h3>
+                    <form id="inspiration-form" class="inspiration-form">
+                        <div class="ratings-group">
+                            <div class="rating-row">
+                                <div class="rating-label">Amour</div>
+                                <div class="rating-dots">
+                                    <input type="radio" name="amour" value="1" id="amour-1"><label
+                                        for="amour-1"></label>
+                                    <input type="radio" name="amour" value="2" id="amour-2"><label
+                                        for="amour-2"></label>
+                                    <input type="radio" name="amour" value="3" id="amour-3"><label
+                                        for="amour-3"></label>
+                                    <input type="radio" name="amour" value="4" id="amour-4"><label
+                                        for="amour-4"></label>
+                                    <input type="radio" name="amour" value="5" id="amour-5"><label
+                                        for="amour-5"></label>
+                                </div>
+                            </div>
+                            <div class="rating-row">
+                                <div class="rating-label">Santé</div>
+                                <div class="rating-dots">
+                                    <input type="radio" name="sante" value="1" id="sante-1"><label
+                                        for="sante-1"></label>
+                                    <input type="radio" name="sante" value="2" id="sante-2"><label
+                                        for="sante-2"></label>
+                                    <input type="radio" name="sante" value="3" id="sante-3"><label
+                                        for="sante-3"></label>
+                                    <input type="radio" name="sante" value="4" id="sante-4"><label
+                                        for="sante-4"></label>
+                                    <input type="radio" name="sante" value="5" id="sante-5"><label
+                                        for="sante-5"></label>
+                                </div>
+                            </div>
+                            <div class="rating-row">
+                                <div class="rating-label">Travail</div>
+                                <div class="rating-dots">
+                                    <input type="radio" name="travail" value="1" id="travail-1"><label
+                                        for="travail-1"></label>
+                                    <input type="radio" name="travail" value="2" id="travail-2"><label
+                                        for="travail-2"></label>
+                                    <input type="radio" name="travail" value="3" id="travail-3"><label
+                                        for="travail-3"></label>
+                                    <input type="radio" name="travail" value="4" id="travail-4"><label
+                                        for="travail-4"></label>
+                                    <input type="radio" name="travail" value="5" id="travail-5"><label
+                                        for="travail-5"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="validate-inspiration">Valider</button>
+                    </form>
+                    <div id="inspiration-result" class="inspiration-result" style="margin-top: 20px;"></div>
+                </div>
+                <script>
+                    document.getElementById('inspiration-form').addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        const amour = document.querySelector('input[name="amour"]:checked');
+                        const sante = document.querySelector('input[name="sante"]:checked');
+                        const travail = document.querySelector('input[name="travail"]:checked');
+                        if (!amour || !sante || !travail) {
+                            document.getElementById('inspiration-result').textContent = "Veuillez sélectionner une note pour chaque catégorie.";
+                            return;
                         }
-                    </script>
-                </div>
+                        const payload = {
+                            amour: amour.value,
+                            sante: sante.value,
+                            travail: travail.value
+                        };
+                        try {
+                            const response = await fetch('/frontend/ActionServlet/genererInspiration', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            if (response.ok) {
+                                const result = await response.text();
+                                document.getElementById('inspiration-result').textContent = result;
+                            } else {
+                                document.getElementById('inspiration-result').textContent = "Erreur lors de la génération de l'inspiration.";
+                            }
+                        } catch (err) {
+                            document.getElementById('inspiration-result').textContent = "Erreur réseau.";
+                        }
+                    });
+                </script>
+                <style>
 
-                <div class="card">
-                    <h2 id="client-profile-title" class="card-title"></h2>
-                    <div id="client-profile" class="client-profile"></div>
-
-                    <div class="inspiration-section">
-                        <h3 class="inspiration-title">Besoin d'inspirations ?</h3>
-                        <div id="inspiration-ratings" class="inspiration-ratings"></div>
-                        <div id="inspiration-result" class="inspiration-result"></div>
-                    </div>
-                </div>
+                </style>
             </div>
+        </div>
 
-            <script>
-                function generateConsultationDashboard(data) {
-                    // Set the dashboard title
-                    document.getElementById('dashboard-title').textContent = `Tableau de bord de consultation: "${data.medium}" pour "${data.client.firstName} ${data.client.lastName}"`;
+        <script>
+            function generateConsultationDashboard(data) {
+                // Set the dashboard title
+                document.getElementById('dashboard-title').textContent = `Tableau de bord de consultation: "${data.medium}" pour "${data.client.firstName} ${data.client.lastName}"`;
 
-                    // Populate previous consultations
-                    const previousConsultationsContainer = document.getElementById('previous-consultations');
-                    data.previousConsultations.forEach(consultation => {
-                        const consultationItem = document.createElement('div');
-                        consultationItem.className = 'consultation-item';
-                        consultationItem.innerHTML = `
+                // Populate previous consultations
+                const previousConsultationsContainer = document.getElementById('previous-consultations');
+                data.previousConsultations.forEach(consultation => {
+                    const consultationItem = document.createElement('div');
+                    consultationItem.className = 'consultation-item';
+                    consultationItem.innerHTML = `
                     <div class="consultation-date">${consultation.date}</div>
                     <div class="consultation-comment">${consultation.comment}</div>
                     `;
-                        previousConsultationsContainer.appendChild(consultationItem);
-                    });
+                    previousConsultationsContainer.appendChild(consultationItem);
+                });
 
-                    // Set the client profile title
-                    document.getElementById('client-profile-title').textContent = `Profil Astral de "${data.client.firstName} ${data.client.lastName}"`;
+                // Set the client profile title
+                document.getElementById('client-profile-title').textContent = `Profil Astral de "${data.client.firstName} ${data.client.lastName}"`;
 
-                    // Populate client profile
-                    const clientProfileContainer = document.getElementById('client-profile');
-                    data.clientProfile.forEach(detail => {
-                        const profileDetail = document.createElement('div');
-                        profileDetail.className = 'profile-detail';
-                        profileDetail.innerHTML = `
+                // Populate client profile
+                const clientProfileContainer = document.getElementById('client-profile');
+                data.clientProfile.forEach(detail => {
+                    const profileDetail = document.createElement('div');
+                    profileDetail.className = 'profile-detail';
+                    profileDetail.innerHTML = `
                     <div class="profile-label">${detail.label}</div>
                     <div class="profile-value">${detail.value}</div>
                     `;
-                        clientProfileContainer.appendChild(profileDetail);
-                    });
+                    clientProfileContainer.appendChild(profileDetail);
+                });
 
-                    // Populate inspiration ratings
-                    const inspirationRatingsContainer = document.getElementById('inspiration-ratings');
-                    data.inspirationRatings.forEach(rating => {
-                        const ratingRow = document.createElement('div');
-                        ratingRow.className = 'rating-row';
-                        const dots = Array.from({length: 5}, (_, i) => `<div class="rating-dot ${i < rating.value ? 'active' : ''}"></div>`).join('');
-                        ratingRow.innerHTML = `
+                // Populate inspiration ratings
+                const inspirationRatingsContainer = document.getElementById('inspiration-ratings');
+                data.inspirationRatings.forEach(rating => {
+                    const ratingRow = document.createElement('div');
+                    ratingRow.className = 'rating-row';
+                    const dots = Array.from({ length: 5 }, (_, i) => `<div class="rating-dot ${i < rating.value ? 'active' : ''}"></div>`).join('');
+                    ratingRow.innerHTML = `
                     <div class="rating-label">${rating.label}</div>
                     <div class="rating-dots">${dots}</div>
                     `;
-                        inspirationRatingsContainer.appendChild(ratingRow);
-                    });
+                    inspirationRatingsContainer.appendChild(ratingRow);
+                });
 
-                    // Set the inspiration result
-                    document.getElementById('inspiration-result').textContent = data.inspirationResult;
-                }
+                // Set the inspiration result
+                document.getElementById('inspiration-result').textContent = data.inspirationResult;
+            }
 
-                // Example data
-                const exampleData = {
-                    medium: "DénominationMedium",
-                    client: {firstName: "Prenom", lastName: "Nom"},
-                    previousConsultations: [
-                        {date: "01/01/2023", comment: "Commentaire d'une ancienne consultation 1"},
-                        {date: "02/02/2023", comment: "Commentaire d'une ancienne consultation 2"},
-                        {date: "03/03/2023", comment: "Commentaire d'une ancienne consultation 3"}
-                    ],
-                    clientProfile: [
-                        {label: "Couleur", value: "Bleu"},
-                        {label: "Signe chinois", value: "Dragon"},
-                        {label: "Animal totem", value: "Loup"},
-                        {label: "Signe zodiaque", value: "Verseau"}
-                    ],
-                    inspirationRatings: [
-                        {label: "Amour", value: 3},
-                        {label: "Santé", value: 2},
-                        {label: "Travail", value: 4}
-                    ],
-                    inspirationResult: "Voici l'inspiration généré selon les paramètres indiqués par l'employé"
-                };
+            // Example data
+            const exampleData = {
+                medium: "DénominationMedium",
+                client: { firstName: "Prenom", lastName: "Nom" },
+                previousConsultations: [
+                    { date: "01/01/2023", comment: "Commentaire d'une ancienne consultation 1" },
+                    { date: "02/02/2023", comment: "Commentaire d'une ancienne consultation 2" },
+                    { date: "03/03/2023", comment: "Commentaire d'une ancienne consultation 3" }
+                ],
+                clientProfile: [
+                    { label: "Couleur", value: "Bleu" },
+                    { label: "Signe chinois", value: "Dragon" },
+                    { label: "Animal totem", value: "Loup" },
+                    { label: "Signe zodiaque", value: "Verseau" }
+                ],
+                inspirationRatings: [
+                    { label: "Amour", value: 3 },
+                    { label: "Santé", value: 2 },
+                    { label: "Travail", value: 4 }
+                ],
+                inspirationResult: "Voici l'inspiration généré selon les paramètres indiqués par l'employé"
+            };
 
-                // Generate the dashboard with example data
-                generateConsultationDashboard(exampleData);
-            </script>
-        </main>
-    </body>
+            // Generate the dashboard with example data
+            generateConsultationDashboard(exampleData);
+        </script>
+    </main>
+</body>
 
 </html>

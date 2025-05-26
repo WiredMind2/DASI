@@ -109,10 +109,6 @@ public class ActionServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
-        
-        //Service service = new Service();
-        //new TestAction(service).execute(request);
-        //new ClientsSerialisation().appliquer(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
