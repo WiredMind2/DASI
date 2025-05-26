@@ -81,6 +81,7 @@ public class ActionServlet extends HttpServlet {
             case "statistics" : {
                 new getStatisticsAction(service).execute(request);
                 new StatisticsSerialisation().appliquer(request,response);
+            }
             case "getConsultation" : {
                 new getConsultationEnCoursAction(service).execute(request);
                 new ConsultationSerialisation().appliquer(request, response);
