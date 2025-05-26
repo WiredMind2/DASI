@@ -15,13 +15,16 @@ web\vue\MediumsSerialisation.class
 web\controleur\ActionServlet.class
 web\modele\Action.class
 web\modele\TestAction.class
+web\vue\ConsultationHistorySerialisation.class
 web\vue\MediumProfileSerialisation.class
 web\modele\checkConnectedAction.class
 web\vue\ClientProfileSerialisation.class
 web\modele\getMediumProfileAction.class
 web\vue\DisconnectSerialisation.class
 web\vue\LoginSerialisation.class
+web\vue\StatisticsSerialisation.class
 web\modele\ajouterCommentaireAction.class
+web\modele\getStatisticsAction.class
 web\vue\CheckConnectedSerialisation.class
 web\modele\loginAction.class
 web\modele\getMediumsAction.class
