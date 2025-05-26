@@ -104,7 +104,6 @@
                     console.error(error.message);
                 }
                 return {
-                    breadcrumb: breadcrumbs,
                     profile: {
                         name: "Mme Morgane",
                         type: "Spirite",
@@ -181,7 +180,7 @@
                                                                         ${data.profile.specialties.map(specialty => `<li>${specialty}</li>`).join("")}
                                                                 </ul>
                                                         </div>
-                                                        ${checkUserLoggedIn() ? '<button type="button" class="btn-consultation" onclick="requestConsultation(); return false;">Demander une consultation</button>' : '<a href="login.html" class="login-message">Veuillez vous connecter pour demander une consultation.</a>'}
+                                                        ${checkUserLoggedIn() ? '<button type="button" class="btn-consultation" onclick="requestConsultation(); return false;"><span>Demander une consultation</span></button>' : '<a href="login.html" class="login-message">Veuillez vous connecter pour demander une consultation.</a>'}
                                                 </div>
                                         </div>
                                 </div>
