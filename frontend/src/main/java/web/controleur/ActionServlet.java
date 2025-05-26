@@ -17,6 +17,7 @@ import metier.service.Service;
 import web.modele.ajouterCommentaireAction;
 import web.modele.checkConnectedAction;
 import web.modele.getClientProfileAction;
+import web.modele.getConsultationEnCoursAction;
 import web.modele.getMediumProfileAction;
 import web.modele.getMediumsAction;
 import web.modele.loginAction;
@@ -26,6 +27,7 @@ import web.modele.terminerConsultationAction;
 import web.vue.BooleanSerialisation;
 import web.vue.CheckConnectedSerialisation;
 import web.vue.ClientProfileSerialisation;
+import web.vue.ConsultationSerialisation;
 import web.vue.DisconnectSerialisation;
 import web.vue.LoginSerialisation;
 import web.vue.MediumProfileSerialisation;
@@ -65,6 +67,11 @@ public class ActionServlet extends HttpServlet {
             case "medium" : {
                 new getMediumProfileAction(service).execute(request);
                 new MediumProfileSerialisation().appliquer(request,response);
+                break;
+            }
+            case "getConsultation" : {
+                new getConsultationEnCoursAction(service).execute(request);
+                new ConsultationSerialisation().appliquer(request, response);
                 break;
             }
             case "requestConsultation" : {

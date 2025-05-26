@@ -32,20 +32,25 @@ public class ConsultationSerialisation extends Serialisation {
 
     @Override
     public void appliquer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json;charset=UTF-8");
-
         Consultation consultation = (Consultation) request.getAttribute("consultation");
+        if(consultation == null){
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
         List<Consultation> histConsuls = (List<Consultation>) request.getAttribute("histConsuls");
 
+        response.setContentType("application/json;charset=UTF-8");
+
+        Client client = consultation.getClient();
+        ProfilAstral profilAstral = client.getProfil_astral();
+        
         JsonObject consultationData = new JsonObject();
         consultationData.addProperty("medium", consultation.getMedium().getDenomination());
         
         JsonObject clientData = new JsonObject();
-        clientData.addProperty("firstName", consultation.getClient().getPrenom());
-        clientData.addProperty("lastName", consultation.getClient().getNom());
+        clientData.addProperty("firstName", client.getPrenom());
+        clientData.addProperty("lastName", client.getNom());
         consultationData.add("client", clientData);
-        
-        
         
         JsonArray history = new JsonArray();
         for (Consultation consult : histConsuls) {
@@ -58,7 +63,19 @@ public class ConsultationSerialisation extends Serialisation {
 
             history.add(consultData);
         }
+        
+        consultationData.add("previousConsultations", history);
+        
+        JsonObject clientProfile = new JsonObject();
+        clientProfile.addProperty("Couleur", profilAstral.getCouleur());
+        clientProfile.addProperty("Signe chinois", profilAstral.getSigne_chinois());
+        clientProfile.addProperty("Animal totem", profilAstral.getAnimal());
+        clientProfile.addProperty("Signe zodiaque", profilAstral.getSigne_zodiaque());
 
+        consultationData.add("clientProfile", clientProfile);
+        
+        
+        
 
         JsonObject result = new JsonObject();
         result.add("profile", profile);
