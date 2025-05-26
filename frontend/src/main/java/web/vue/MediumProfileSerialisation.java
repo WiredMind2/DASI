@@ -60,7 +60,7 @@ public class MediumProfileSerialisation extends Serialisation{
         }
 
         //Les attributs suivants sont des valeurs par défaut car non fourni par le backend pour la réalisation du front
-        profile.addProperty("image", "crystall-ball.webp");
+        profile.addProperty("image", "crystal-ball.webp");
         profile.addProperty("rating", 0);
         JsonArray specialities = new JsonArray();
         specialities.add("Communication avec l'au-delà");

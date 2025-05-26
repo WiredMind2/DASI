@@ -21,6 +21,7 @@ import metier.modele.Consultation;
 import metier.modele.Client;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import metier.modele.ProfilAstral;
 
@@ -53,20 +54,26 @@ public class ClientProfileSerialisation extends Serialisation {
             JsonObject consultJson = new JsonObject();
             consultJson.addProperty("medium", medium.getDenomination());
 
-            consultJson.addProperty("comment", medium.getPresentation());
+            consultJson.addProperty("comment", consult.getCommentaire_employe());
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             consultJson.addProperty("date", formatter.format(consult.getDate_fin()));
 
             if (medium instanceof Cartomancien) {
-                profile.addProperty("type", "Cartomancien");
+                consultJson.addProperty("type", "Cartomancien");
             } else if (medium instanceof Spirite) {
-                profile.addProperty("type", "Spirite");
+                consultJson.addProperty("type", "Spirite");
             } else if (medium instanceof Astrologue) {
-                profile.addProperty("type", "Astrologue");
+                consultJson.addProperty("type", "Astrologue");
             }
-
-            Duration duration = Duration.between(consult.getDate_debut().toInstant(), consult.getDate_fin().toInstant());
+            
+            
+            Date debut = consult.getDate_debut();
+            Date fin = consult.getDate_fin();
+            if(debut == null){
+                debut = new Date(fin.getTime());
+            }
+            Duration duration = Duration.between(debut.toInstant(), fin.toInstant());
 
             long hours = duration.toHours();
             long minutes = duration.toMinutes() % 60;

@@ -49,11 +49,8 @@
             <h1 class="card-title">Ajouter un commentaire sur la consultation</h1>
 
             <div class="comment-form">
-                <div class="comment-instructions">
-                    L'employé écrit ici le commentaire de ce qui s'est passé durant la consultation et qui pourrait être utile pour ses collègues lors de futurs consultations avec ce client
-                </div>
 
-                <textarea rows="6" style="width: 100%; padding: 1rem; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 1rem;"></textarea>
+                <textarea rows="6" style="width: 1000px; height: 300px; padding: 1rem; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 1rem;"></textarea>
 
                 <button class="action-button" onclick="addComment()">Ajouter le commentaire</button>
                 <script>
@@ -68,7 +65,7 @@
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({comment})
+                            body: comment
                         })
                                 .then(response => {
                                     if (response.ok) {
