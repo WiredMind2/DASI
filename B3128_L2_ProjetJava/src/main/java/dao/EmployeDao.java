@@ -70,10 +70,11 @@ public class EmployeDao {
         //choisi l'employe qui a le moins de consultations, qui est disponible et qui a le medium genre
         EntityManager em = JpaUtil.obtenirContextePersistance();
         try{
-            return em.createQuery("SELECT e FROM Employe e WHERE e.disponible = true AND e.medium = :medium ORDER BY (SELECT COUNT(c) FROM Consultation c WHERE c.employe.id = e.id) ASC",Employe.class)
-                    .setParameter("medium",m).setMaxResults(1).getSingleResult();            
+            return em.createQuery("SELECT e FROM Employe e WHERE e.disponible = true AND e.genre = :genre ORDER BY (SELECT COUNT(c) FROM Consultation c WHERE c.employe.id = e.id)",Employe.class)
+                    .setParameter("genre",m.getGenre()).setMaxResults(1).getSingleResult();            
         }
         catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
 
