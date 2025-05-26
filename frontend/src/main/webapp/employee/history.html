@@ -63,26 +63,26 @@
                                 date: "12/06/2024",
                                 client: "Alice Dupont",
                                 medium: "Madame Irma",
-                                feedback: "Très satisfait",
-                                comment: "Consultation très précise et bienveillante."
+                                avisClient: "Très satisfait",
+                                commentEmploye: "Consultation très précise et bienveillante."
                             },
                             {
                                 date: "10/06/2024",
                                 client: "Bob Martin",
                                 medium: "Maître Zen",
-                                feedback: "Satisfait",
-                                comment: "Bon échange, réponses claires."
+                                avisClient: "Satisfait",
+                                commentEmploye: "Bon échange, réponses claires."
                             },
                             {
                                 date: "08/06/2024",
                                 client: "Claire Dubois",
                                 medium: "Oracle Luna",
-                                feedback: "Peu satisfait",
-                                comment: "Manque de détails dans la consultation."
+                                avisClient: "Peu satisfait",
+                                commentEmploye: "Manque de détails dans la consultation."
                             }
                         ]);
                     }
-
+    
                     function renderHistory() {
                         const container = document.getElementById('history-list');
                         fetchConsultationHistory().then(history => {
@@ -93,14 +93,14 @@
                                 div.innerHTML = `
                                     <div class="history-date">${item.date}</div>
                                     <div class="history-client">"${item.client}" et "${item.medium}"</div>
-                                    <div class="history-feedback">${item.feedback}</div>
-                                    <div class="history-comment">${item.comment}</div>
+                                    <div class="history-feedback">${item.avisClient}</div>
+                                    <div class="history-comment">${item.commentEmploye}</div>
                                 `;
                                 container.appendChild(div);
                             });
                         });
                     }
-
+    
                     renderHistory();
                 </script>
             </div>

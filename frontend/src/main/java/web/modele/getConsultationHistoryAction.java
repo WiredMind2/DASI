@@ -5,9 +5,11 @@
  */
 package web.modele;
 
+import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.Client;
+import metier.modele.Consultation;
 import metier.modele.Medium;
 import metier.service.Service;
 
@@ -15,14 +17,15 @@ import metier.service.Service;
  *
  * @author aberton1
  */
-public class requestConsultationAction extends Action {
+public class getConsultationHistoryAction extends Action {
 
-    public requestConsultationAction(Service service) {
+    public getConsultationHistoryAction(Service service) {
         super(service);
     }
 
     @Override
     public void execute(HttpServletRequest request) {
+        
         Cookie[] cookies = request.getCookies();
     	String authToken = null;
     	if (cookies != null) {
@@ -35,18 +38,10 @@ public class requestConsultationAction extends Action {
     	}
         
         if(authToken != null){
-            long idClient = Long.parseLong(authToken);
-            long idMedium = Long.parseLong(request.getParameter("idMedium"));
+            long idEmploye = Long.parseLong(authToken);
+            List<Consultation> consultations = service.getHistoriqueConsultationsEmploye(idEmploye);
         
-            Client client = service.findClientById(idClient);
-            Medium medium = service.findMediumById(idMedium);
-        
-            boolean res = service.demandeConsultation(client, medium);
-        
-            request.setAttribute("resultConsultation", res);
-        }
-        else{
-            request.setAttribute("resultConsultation", false);
+            request.setAttribute("consultations", consultations);
         }
     }
     
