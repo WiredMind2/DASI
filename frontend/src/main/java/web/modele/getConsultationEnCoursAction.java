@@ -5,9 +5,12 @@
  */
 package web.modele;
 
+import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.Client;
+import metier.modele.Consultation;
+import metier.modele.Employe;
 import metier.modele.Medium;
 import metier.service.Service;
 
@@ -36,15 +39,14 @@ public class getConsultationEnCoursAction extends Action {
     	}
         
         if(authToken != null){
-            long idClient = Long.parseLong(request.getParameter("idClient"));
-            long idMedium = Long.parseLong(authToken);
-        
-            Client client = service.findClientById(idClient);
-            Medium medium = service.findMediumById(idMedium);
-        
-            boolean res = service.demandeConsultation(client, medium);
-        
-            request.setAttribute("resultConsultation", res);
+            long idEmploye = Long.parseLong(authToken);
+            Employe employe = service.findEmployeById(idEmploye);
+
+            Consultation consultation = service.findConsultationEnCours(employe);
+            List<Consultation> histConsuls = service.getHistoriqueConsultationsClient(consultation.getClient().getId());
+
+            request.setAttribute("consultation", consultation);
+            request.setAttribute("histConsuls", histConsuls);
         }
         else{
         }
