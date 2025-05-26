@@ -4,6 +4,7 @@ C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\requestConsul
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\LoginSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\BooleanSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\MediumsSerialisation.java
+C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\StatisticsSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\controleur\ActionServlet.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\CheckConnectedSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\ConsultationSerialisation.java
@@ -14,6 +15,8 @@ C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\getConsultati
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\RegisterSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\getConsultationEnCoursAction.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\DisconnectSerialisation.java
+C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\getStatisticsAction.java
+C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\ConsultationHistorySerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\vue\MediumProfileSerialisation.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\getMediumProfileAction.java
 C:\Users\aberton1\Downloads\DASI\frontend\src\main\java\web\modele\checkConnectedAction.java
