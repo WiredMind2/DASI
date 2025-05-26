@@ -72,7 +72,7 @@
 
     <script>
         function requestConsultation() {
-            fetch("/frontend/ActionServlet/requestConsultation?id=" + (window.location).toString().split('=').at(-1), {
+            fetch("/frontend/ActionServlet/requestConsultation?idMedium=" + (window.location).toString().split('=').at(-1), {
                 method: "POST"
             })
                 .then(response => {
