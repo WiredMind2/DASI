@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2025-05-26T21:11:59")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2025-05-27T22:30:11")
 @StaticMetamodel(Astrologue.class)
 public class Astrologue_ extends Medium_ {
 
