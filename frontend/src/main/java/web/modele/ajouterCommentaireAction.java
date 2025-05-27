@@ -5,10 +5,15 @@
  */
 package web.modele;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.Client;
 import metier.modele.Consultation;
+import metier.modele.Employe;
 import metier.modele.Medium;
 import metier.service.Service;
 
@@ -25,28 +30,44 @@ public class ajouterCommentaireAction extends Action {
     @Override
     public void execute(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-    	String authToken = null;
-    	if (cookies != null) {
+        String authToken = null;
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("authToken".equals(cookie.getName())) {
                     authToken = cookie.getValue();
                     break;
                 }
             }
-    	}
-        
-        if(authToken != null){
-            long idConsultation = Long.parseLong(request.getParameter("idConsultation"));
-            String commentaire = request.getParameter("idConsultation");
+        }
 
-            Consultation consultation = service.findConsultationById(idConsultation);
-            boolean res = service.ajouterCommentaireEmploye(consultation, commentaire);
-        
-            request.setAttribute("result", res);
+        if (authToken != null) {
+            try {
+                long idEmploye = Long.parseLong(authToken);
+                Employe employe = service.findEmployeById(idEmploye);
+                Consultation consultation = service.findConsultationEnCours(employe);
+                
+                BufferedReader reader = null;
+                StringBuilder sb = new StringBuilder();
+                reader = request.getReader();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+                String commentaire = sb.toString();
+                
+                System.out.println("Comm: " + commentaire);
+                boolean res = service.ajouterCommentaireEmploye(consultation, commentaire);
+                if (res == true) {
+                    res = service.terminerConsultation(consultation);
+                }
+                System.out.println("Comm2: " + res);
+                request.setAttribute("result", res);
+                return;
+            } catch (IOException ex) {
+                Logger.getLogger(ajouterCommentaireAction.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        else{
-            request.setAttribute("result", false);
-        }
+        request.setAttribute("result", false);
     }
-    
+
 }

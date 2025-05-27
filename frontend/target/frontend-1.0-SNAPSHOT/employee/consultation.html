@@ -54,9 +54,9 @@
             <div class="card">
                 <h2 class="card-title">Anciennes consultations</h2>
                 <div id="previous-consultations" class="previous-consultations"></div>
-                <button class="action-button" onclick="finishConsultation()">Finir la consultation</button>
+                <a class="action-button" href="add-comment.html">Finir la consultation</a>
                 <script>
-                    function finishConsultation() {
+                    function finishConsultation() { /* not used */
                         fetch('/frontend/ActionServlet/terminerConsultation', { method: 'POST' })
                             .then(response => {
                                 if (response.ok) {

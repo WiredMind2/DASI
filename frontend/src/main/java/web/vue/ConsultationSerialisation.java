@@ -33,7 +33,7 @@ public class ConsultationSerialisation extends Serialisation {
     @Override
     public void appliquer(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Consultation consultation = (Consultation) request.getAttribute("consultation");
-        if(consultation == null){
+        if (consultation == null) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
@@ -43,29 +43,37 @@ public class ConsultationSerialisation extends Serialisation {
 
         Client client = consultation.getClient();
         ProfilAstral profilAstral = client.getProfil_astral();
-        
+
         JsonObject consultationData = new JsonObject();
         consultationData.addProperty("medium", consultation.getMedium().getDenomination());
-        
+
         JsonObject clientData = new JsonObject();
         clientData.addProperty("firstName", client.getPrenom());
         clientData.addProperty("lastName", client.getNom());
         consultationData.add("client", clientData);
-        
+
         JsonArray history = new JsonArray();
         for (Consultation consult : histConsuls) {
             JsonObject consultData = new JsonObject();
 
-            //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            //consultData.addProperty("date", formatter.format(consult.getDate_fin()));
+            Date dateConsul = consult.getDate_fin();
+            if (dateConsul == null) {
+                continue;
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            consultData.addProperty("date", formatter.format(dateConsul));
 
-            consultData.addProperty("comment", consult.getCommentaire_employe());
+            String commentaire = consult.getCommentaire_employe();
+            if (commentaire == null) {
+                commentaire = "Pas de commentaire";
+            }
+            consultData.addProperty("comment", commentaire);
 
             history.add(consultData);
         }
-        
+
         consultationData.add("previousConsultations", history);
-        
+
         JsonObject clientProfile = new JsonObject();
         clientProfile.addProperty("Couleur", profilAstral.getCouleur());
         clientProfile.addProperty("Signe chinois", profilAstral.getSigne_chinois());
