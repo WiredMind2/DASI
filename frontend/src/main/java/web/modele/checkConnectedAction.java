@@ -39,7 +39,7 @@ public class checkConnectedAction extends Action {
             }
         }
         
-        if (authToken == null) return;
+        if (authToken == null) {return;} //TODO J'ai mis le if pour éviter l'éeereur mais côté front il faudrait qu'on ajoute de quoi gérer ça car là juste connecté avec aucun compte
 
         long id = Long.parseLong(authToken);
         Client client = service.findClientById(id);

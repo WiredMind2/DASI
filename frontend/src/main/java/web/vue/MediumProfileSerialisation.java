@@ -51,12 +51,14 @@ public class MediumProfileSerialisation extends Serialisation{
         
         JsonArray testimonials = new JsonArray();
         for(Consultation consult : consultations){
-            JsonObject consultJson = new JsonObject();
-            consultJson.addProperty("name", consult.getClient().getPrenom() + " " + consult.getClient().getNom().charAt(0) + ".");
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            consultJson.addProperty("date", formatter.format(consult.getDate_fin()));
-            consultJson.addProperty("test", consult.getAvis_client());
-            testimonials.add(consultJson);
+            if (consult.getDate_fin() != null){
+                JsonObject consultJson = new JsonObject();
+                consultJson.addProperty("name", consult.getClient().getPrenom() + " " + consult.getClient().getNom().charAt(0) + ".");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                consultJson.addProperty("date", formatter.format(consult.getDate_fin()));
+                consultJson.addProperty("test", consult.getAvis_client());
+                testimonials.add(consultJson);
+            }
         }
 
         //Les attributs suivants sont des valeurs par défaut car non fourni par le backend pour la réalisation du front

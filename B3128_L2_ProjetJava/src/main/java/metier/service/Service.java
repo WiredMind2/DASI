@@ -117,8 +117,7 @@ public class Service {
     }
 
     public boolean demandeConsultation(Client client, Medium medium) {
-
-        System.out.println("aaaa");
+        
         boolean resultat = false;
 
         System.out.println(medium);
@@ -130,17 +129,19 @@ public class Service {
             if (employe != null) {
 
                 Consultation newConsultation = new Consultation(client, medium, employe);
+                Date dateDemande = new Date();
+                newConsultation.setDate_debut(dateDemande);
 
                 JpaUtil.ouvrirTransaction();
                 consultationDao.create(newConsultation);
 
                 employe.setDisponible(false);
                 employeDao.update(employe);
-
+                
                 JpaUtil.validerTransaction();
 
                 //SimpleDateFormat
-                Date dateDemande = new Date();
+                
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'à' HH:mm");
 
                 // envoie des notifications

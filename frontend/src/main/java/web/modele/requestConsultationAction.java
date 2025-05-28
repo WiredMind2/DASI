@@ -40,13 +40,9 @@ public class requestConsultationAction extends Action {
         
             Client client = service.findClientById(idClient);
             Medium medium = service.findMediumById(idMedium);
-        
-            System.out.println(medium);
-            System.out.println(client);
-            System.out.println("bbbb");
+            
             boolean res = service.demandeConsultation(client, medium);
-            System.out.println("cccc");
-            System.out.println(res);
+            
         
             request.setAttribute("result", res);
         }
