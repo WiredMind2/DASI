@@ -1,3 +1,4 @@
+web\modele\getMapAction.class
 web\modele\registerAction.class
 web\modele\getClientProfileAction.class
 web\modele\getConsultationEnCoursAction.class
@@ -24,6 +25,7 @@ web\vue\DisconnectSerialisation.class
 web\vue\LoginSerialisation.class
 web\vue\StatisticsSerialisation.class
 web\modele\ajouterCommentaireAction.class
+web\vue\MapSerialisation.class
 web\modele\getStatisticsAction.class
 web\vue\CheckConnectedSerialisation.class
 web\modele\loginAction.class

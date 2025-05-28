@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import metier.modele.ProfilAstral;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2025-05-27T22:30:11")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2025-05-28T21:57:06")
 @StaticMetamodel(Client.class)
 public class Client_ { 
 

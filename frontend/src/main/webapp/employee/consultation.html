@@ -141,14 +141,14 @@
                             travail: travail.value
                         };
                         try {
-                            const response = await fetch('/frontend/ActionServlet/genererInspiration', {
+                            const response = await fetch('/frontend/ActionServlet/getInspiration', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(payload)
                             });
                             if (response.ok) {
                                 const result = await response.text();
-                                document.getElementById('inspiration-result').textContent = result;
+                                document.getElementById('inspiration-result').innerHTML = result;
                             } else {
                                 document.getElementById('inspiration-result').textContent = "Erreur lors de la génération de l'inspiration.";
                             }

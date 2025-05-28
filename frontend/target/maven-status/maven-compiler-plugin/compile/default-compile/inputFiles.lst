@@ -1,4 +1,5 @@
 C:\Temp\DASI\frontend\src\main\java\web\controleur\ActionServlet.java
+C:\Temp\DASI\frontend\src\main\java\web\vue\MapSerialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\Serialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\StatisticsSerialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\DisconnectSerialisation.java
@@ -22,6 +23,7 @@ C:\Temp\DASI\frontend\src\main\java\web\modele\getMediumProfileAction.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\ClientProfileSerialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\LoginSerialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\ConsultationHistorySerialisation.java
+C:\Temp\DASI\frontend\src\main\java\web\modele\getMapAction.java
 C:\Temp\DASI\frontend\src\main\java\web\vue\ConsultationSerialisation.java
 C:\Temp\DASI\frontend\src\main\java\web\modele\requestConsultationAction.java
 C:\Temp\DASI\frontend\src\main\java\web\modele\checkConnectedAction.java

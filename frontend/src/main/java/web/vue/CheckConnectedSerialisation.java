@@ -23,22 +23,21 @@ import metier.modele.Spirite;
  *
  * @author aberton1
  */
-public class CheckConnectedSerialisation extends Serialisation{
+public class CheckConnectedSerialisation extends Serialisation {
 
     @Override
     public void appliquer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        String accName = (String)request.getAttribute("accName");
-        
-        if(accName != null){
+        String accName = (String) request.getAttribute("accName");
+
+        if (accName != null) {
+            response.setContentType("text/plain;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+
             out.println(accName);
+            out.close();
+        } else {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
-        else {
-            out.println('-');
-        }
-        out.close();
     }
-    
+
 }

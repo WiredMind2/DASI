@@ -18,6 +18,7 @@ import web.modele.checkConnectedAction;
 import web.modele.getClientProfileAction;
 import web.modele.getConsultationHistoryAction;
 import web.modele.getConsultationEnCoursAction;
+import web.modele.getInspirationAction;
 import web.modele.getMapAction;
 import web.modele.getMediumProfileAction;
 import web.modele.getMediumsAction;
@@ -38,6 +39,7 @@ import web.vue.MediumProfileSerialisation;
 import web.vue.MediumsSerialisation;
 import web.vue.RegisterSerialisation;
 import web.vue.StatisticsSerialisation;
+import web.vue.StringSerialisation;
 
 /**
  *
@@ -74,14 +76,19 @@ public class ActionServlet extends HttpServlet {
                 new MediumProfileSerialisation().appliquer(request,response);
                 break;
             }
-            case "employeHistory" : {
+            case "getConsultationHistory" : {
                 new getConsultationHistoryAction(service).execute(request);
                 new ConsultationHistorySerialisation().appliquer(request,response);
                 break;
             }
-            case "statistics" : {
+            case "getStatistics" : {
                 new getStatisticsAction(service).execute(request);
                 new StatisticsSerialisation().appliquer(request,response);
+                break;
+            }
+            case "getInspiration" : {
+                new getInspirationAction(service).execute(request);
+                new StringSerialisation().appliquer(request, response);
             }
             case "getConsultation" : {
                 new getConsultationEnCoursAction(service).execute(request);
