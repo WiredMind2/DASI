@@ -7,7 +7,6 @@ package web.controleur;
 
 import dao.JpaUtil;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +18,7 @@ import web.modele.checkConnectedAction;
 import web.modele.getClientProfileAction;
 import web.modele.getConsultationHistoryAction;
 import web.modele.getConsultationEnCoursAction;
+import web.modele.getMapAction;
 import web.modele.getMediumProfileAction;
 import web.modele.getMediumsAction;
 import web.modele.getStatisticsAction;
@@ -33,6 +33,7 @@ import web.vue.ConsultationHistorySerialisation;
 import web.vue.ConsultationSerialisation;
 import web.vue.DisconnectSerialisation;
 import web.vue.LoginSerialisation;
+import web.vue.MapSerialisation;
 import web.vue.MediumProfileSerialisation;
 import web.vue.MediumsSerialisation;
 import web.vue.RegisterSerialisation;
@@ -85,6 +86,11 @@ public class ActionServlet extends HttpServlet {
             case "getConsultation" : {
                 new getConsultationEnCoursAction(service).execute(request);
                 new ConsultationSerialisation().appliquer(request, response);
+                break;
+            }
+            case "getMap" : {
+                new getMapAction(service).execute(request);
+                new MapSerialisation().appliquer(request, response);
                 break;
             }
             case "requestConsultation" : {
