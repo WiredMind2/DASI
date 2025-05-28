@@ -37,12 +37,12 @@ public class ConsultationHistorySerialisation extends Serialisation{
             }
             consultationJson.addProperty("client", consult.getClient().getPrenom()+" "+consult.getClient().getNom());
             consultationJson.addProperty("medium", consult.getMedium().getDenomination());
-            consultationJson.addProperty("avisClient", "null");
+            consultationJson.addProperty("avisClient", "Indisponible");
 
             if(consult.getCommentaire_employe() != null){
                 consultationJson.addProperty("commentEmploye", consult.getCommentaire_employe());
             }else{
-                consultationJson.addProperty("commentEmploye", "null");
+                consultationJson.addProperty("commentEmploye", "Non commenté");
             }
             result.add(consultationJson);
         }
