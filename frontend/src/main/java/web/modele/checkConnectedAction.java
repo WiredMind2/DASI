@@ -38,6 +38,8 @@ public class checkConnectedAction extends Action {
                 }
             }
         }
+        
+        if (authToken == null) return;
 
         long id = Long.parseLong(authToken);
         Client client = service.findClientById(id);
