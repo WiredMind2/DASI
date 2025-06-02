@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import metier.service.Service;
-import web.modele.checkConnectedAction;
-import web.modele.ajouterCommentaireAction;
-import web.modele.getClientProfileAction;
-import web.modele.getConsultationHistoryAction;
-import web.modele.getConsultationEnCoursAction;
-import web.modele.getInspirationAction;
-import web.modele.getMapAction;
-import web.modele.getMediumProfileAction;
-import web.modele.getMediumsAction;
-import web.modele.getStatisticsAction;
-import web.modele.loginAction;
-import web.modele.registerAction;
-import web.modele.requestConsultationAction;
-import web.modele.terminerConsultationAction;
+import web.modele.CheckConnectedAction;
+import web.modele.AjouterCommentaireAction;
+import web.modele.GetClientProfileAction;
+import web.modele.GetConsultationHistoryAction;
+import web.modele.GetConsultationEnCoursAction;
+import web.modele.GetInspirationAction;
+import web.modele.GetMapAction;
+import web.modele.GetMediumProfileAction;
+import web.modele.GetMediumsAction;
+import web.modele.GetStatisticsAction;
+import web.modele.LoginAction;
+import web.modele.RegisterAction;
+import web.modele.RequestConsultationAction;
+import web.modele.TerminerConsultationAction;
 import web.vue.BooleanSerialisation;
 import web.vue.CheckConnectedSerialisation;
 import web.vue.ClientProfileSerialisation;
@@ -58,70 +58,70 @@ public class ActionServlet extends HttpServlet {
         Service service = new Service();
         switch(todo){
             case "getMediums" : {
-                new getMediumsAction(service).execute(request);
+                new GetMediumsAction(service).execute(request);
                 new MediumsSerialisation().appliquer(request, response);
                 break;
             }
             case "medium" : {
-                new getMediumProfileAction(service).execute(request);
+                new GetMediumProfileAction(service).execute(request);
                 new MediumProfileSerialisation().appliquer(request,response);
                 break;
             }
             case "getConsultationHistory" : {
-                new getConsultationHistoryAction(service).execute(request);
+                new GetConsultationHistoryAction(service).execute(request);
                 new ConsultationHistorySerialisation().appliquer(request,response);
                 break;
             }
             case "getStatistics" : {
-                new getStatisticsAction(service).execute(request);
+                new GetStatisticsAction(service).execute(request);
                 new StatisticsSerialisation().appliquer(request,response);
                 break;
             }
             case "getInspiration" : {
-                new getInspirationAction(service).execute(request);
+                new GetInspirationAction(service).execute(request);
                 new StringSerialisation().appliquer(request, response);
             }
             case "getConsultation" : {
-                new getConsultationEnCoursAction(service).execute(request);
+                new GetConsultationEnCoursAction(service).execute(request);
                 new ConsultationSerialisation().appliquer(request, response);
                 break;
             }
             case "getMap" : {
-                new getMapAction(service).execute(request);
+                new GetMapAction(service).execute(request);
                 new MapSerialisation().appliquer(request, response);
                 break;
             }
             case "requestConsultation" : {
-                new requestConsultationAction(service).execute(request);
+                new RequestConsultationAction(service).execute(request);
                 new BooleanSerialisation().appliquer(request,response);
                 break;
             }
             case "terminerConsultation" : {
-                new terminerConsultationAction(service).execute(request);
+                new TerminerConsultationAction(service).execute(request);
                 new BooleanSerialisation().appliquer(request, response);
                 break;
             }
             case "ajouterCommentaire" : {
-                new ajouterCommentaireAction(service).execute(request);
+                new AjouterCommentaireAction(service).execute(request);
                 new BooleanSerialisation().appliquer(request, response);
             }
             case "login" : {
-                new loginAction(service).execute(request);
+                new LoginAction(service).execute(request);
                 new LoginSerialisation().appliquer(request, response);
                 break;
             }
             case "register" : {
-                new registerAction(service).execute(request);
+                new RegisterAction(service).execute(request);
                 new RegisterSerialisation().appliquer(request, response);
                 break;
             }
             case "getClient" : {
-                new getClientProfileAction(service).execute(request);
+                new GetClientProfileAction(service).execute(request);
                 new ClientProfileSerialisation().appliquer(request, response);
                 break;
             }
             case "checkConnected" : {
-                new checkConnectedAction(service).execute(request);
+                new CheckConnectedAction(service).execute(request);
                 new CheckConnectedSerialisation().appliquer(request, response);
                 break;
             }
