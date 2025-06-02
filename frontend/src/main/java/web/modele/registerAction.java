@@ -1,24 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package web.modele;
 
 import com.google.gson.Gson;
-import static console.Main.printlnConsoleIHM;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.Client;
-import metier.modele.Employe;
-import metier.modele.Medium;
 import metier.service.Service;
 
 class RegisterData {

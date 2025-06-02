@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import metier.service.Service;
-import web.modele.ajouterCommentaireAction;
 import web.modele.checkConnectedAction;
+import web.modele.ajouterCommentaireAction;
 import web.modele.getClientProfileAction;
 import web.modele.getConsultationHistoryAction;
 import web.modele.getConsultationEnCoursAction;
@@ -47,16 +47,7 @@ import web.vue.StringSerialisation;
  */
 @WebServlet(name = "ActionServlet", urlPatterns = {"/ActionServlet", "/ActionServlet/*"})
 public class ActionServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String todo = "";
         if (request.getPathInfo() != null && request.getPathInfo().length() > 0){

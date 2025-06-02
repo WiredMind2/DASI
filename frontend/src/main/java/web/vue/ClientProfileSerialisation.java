@@ -21,7 +21,6 @@ import metier.modele.Consultation;
 import metier.modele.Client;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.temporal.Temporal;
 import java.util.Date;
 import metier.modele.ProfilAstral;
 
@@ -55,9 +54,13 @@ public class ClientProfileSerialisation extends Serialisation {
             consultJson.addProperty("medium", medium.getDenomination());
 
             consultJson.addProperty("comment", consult.getCommentaire_employe());
-
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            consultJson.addProperty("date", formatter.format(consult.getDate_fin()));
+            
+            if(consult.getDate_fin() != null){
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                consultJson.addProperty("date", formatter.format(consult.getDate_fin()));
+            }else{
+                consultJson.addProperty("date", "non finie");
+            }
 
             if (medium instanceof Cartomancien) {
                 consultJson.addProperty("type", "Cartomancien");
@@ -70,35 +73,40 @@ public class ClientProfileSerialisation extends Serialisation {
             
             Date debut = consult.getDate_debut();
             Date fin = consult.getDate_fin();
-            if(debut == null){
-                debut = new Date(fin.getTime());
-            }
-            Duration duration = Duration.between(debut.toInstant(), fin.toInstant());
-
-            long hours = duration.toHours();
-            long minutes = duration.toMinutes() % 60;
-            long seconds = duration.getSeconds() % 60;
-
-            StringBuilder durationStr = new StringBuilder();
-            if (hours > 0) {
-                durationStr.append(hours).append(" hour");
-                if (hours > 1) {
-                    durationStr.append("s");
+            if(fin != null){
+                if(debut == null){
+                    debut = new Date(fin.getTime());
                 }
-            }
-            if (minutes > 0) {
-                if (hours > 0) {
-                    durationStr.append(" ");
-                }
-                durationStr.append(minutes).append(" min");
-            }
-
-            // If duration is exactly 0 minutes
-            if (durationStr.length() == 0) {
-                durationStr.append("0 min");
-            }
+                Duration duration = Duration.between(debut.toInstant(), fin.toInstant());
             
-            consultJson.addProperty("duration", durationStr.toString());
+
+                long hours = duration.toHours();
+                long minutes = duration.toMinutes() % 60;
+                long seconds = duration.getSeconds() % 60;
+
+                StringBuilder durationStr = new StringBuilder();
+                if (hours > 0) {
+                    durationStr.append(hours).append(" hour");
+                    if (hours > 1) {
+                        durationStr.append("s");
+                    }
+                }
+                if (minutes > 0) {
+                    if (hours > 0) {
+                        durationStr.append(" ");
+                    }
+                    durationStr.append(minutes).append(" min");
+                }
+
+                // If duration is exactly 0 minutes
+                if (durationStr.length() == 0) {
+                    durationStr.append("0 min");
+                }
+            
+                consultJson.addProperty("duration", durationStr.toString());
+            }else{
+                consultJson.addProperty("duration", "-");
+            }
             history.add(consultJson);
         }
 
